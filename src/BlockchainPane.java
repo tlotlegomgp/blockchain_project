@@ -3,11 +3,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -26,7 +23,6 @@ public class BlockchainPane extends StackPane{
         Button block4Valid = new Button("Is Block Valid?");
         Button chainValid = new Button("Is Blockchain valid?");
         chainValid.setMinWidth(120);
-
 
         TextArea block1Data = new TextArea("");
         TextArea block2Data = new TextArea("");
@@ -123,6 +119,35 @@ public class BlockchainPane extends StackPane{
 
         BorderPane body = new BorderPane();
         body.setCenter(design);
+
+        //Button actions
+        connect.setOnAction((ActionEvent e) -> {
+
+        });
+
+        disConnect.setOnAction((ActionEvent e) -> {
+
+        });
+
+        chainValid.setOnAction((ActionEvent e) -> {
+
+        });
+
+        block1Valid.setOnAction((ActionEvent e) -> {
+            blockBox1.setBackground(new Background(new BackgroundFill(Color.rgb(174, 217, 167), CornerRadii.EMPTY, Insets.EMPTY)));
+        });
+
+        block2Valid.setOnAction((ActionEvent e) -> {
+            blockBox2.setBackground(new Background(new BackgroundFill(Color.rgb(174, 217, 167), CornerRadii.EMPTY, Insets.EMPTY)));
+        });
+
+        block3Valid.setOnAction((ActionEvent e) -> {
+            blockBox3.setBackground(new Background(new BackgroundFill(Color.rgb(254, 132, 132), CornerRadii.EMPTY, Insets.EMPTY)));
+        });
+
+        block4Valid.setOnAction((ActionEvent e) -> {
+            blockBox4.setBackground(new Background(new BackgroundFill(Color.rgb(254, 132, 132), CornerRadii.EMPTY, Insets.EMPTY)));
+        });
 
         //Set the root node of the Scene
         getChildren().clear();
