@@ -9,13 +9,13 @@ import java.util.Date;
 public class Block {
 
     private int index;
-    private String[] records;
+    private String records;
     private String hash;
     private String prevHash;
     private long timestamp;
     private int nonce;
 
-    public Block(int index, long timestamp, String prevHash, String[] records) {
+    public Block(int index, long timestamp, String prevHash, String records) {
         this.index = index;
         this.records = records;
         this.prevHash = prevHash;
@@ -28,7 +28,7 @@ public class Block {
         return index;
     }
 
-    public String[] getRecords() {
+    public String getRecords() {
         return records;
     }
 
@@ -77,25 +77,15 @@ public class Block {
     }
 
     public String string() {
-        String recordsList = "Records:";
-        for (String record: records){
-            recordsList += record + "-";
-        }
-        return index + timestamp + prevHash + recordsList + nonce;
+        return index + timestamp + prevHash + records + nonce;
     }
 
     public String toString(){
-        String recordsList = "Records:" + "\n";
-        int count = 1;
-        for (String record: records){
-            recordsList += count + ". " + record + "\n";
-            count++;
-        }
 
         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm");
         Date date;
         date = new Date(timestamp);
-        return "Index: " + index + "\n" + "Timestamp: " + date + "\n" + recordsList;
+        return "Index: " + index + "\nTimestamp: " + date + "\nHash: " + hash + "\nPrev-Hash: " + prevHash + "\nNonce: " + nonce + "\nTrades: ";
     }
 
     public void mineBlock(int difficulty){

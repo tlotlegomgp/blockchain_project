@@ -10,7 +10,7 @@ public class Blockchain {
         blocks = new ArrayList<>();
 
         //Genesis block
-        Block block = new Block(0, System.currentTimeMillis(), null, new String[]{"Apple = $120.000", "Google - $140,000"});
+        Block block = new Block(0, System.currentTimeMillis(), null, "Apple - R120.000 \nGoogle - R140,000");
         block.mineBlock(difficulty);
         blocks.add(block);
     }
@@ -23,7 +23,11 @@ public class Blockchain {
         return blocks.get(blocks.size()-1);
     }
 
-    public Block newBlock(String[] records){
+    public Block previousBlock(Block block){
+        return blocks.get(block.getIndex() - 1);
+    }
+
+    public Block newBlock(String records){
         Block recentBlock = recentBlock();
         return new Block(recentBlock.getIndex() + 1, System.currentTimeMillis(), recentBlock.getHash(), records);
     }
@@ -69,6 +73,16 @@ public class Blockchain {
         return false;
     }
 
+    public boolean isBlockValid(String data){
+        for (Block block: blocks){
+            if (data.equals(block.getRecords())){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public boolean isBlockChainValid(){
         if (!isGenesisBlockValid())
             return false;
@@ -93,6 +107,15 @@ public class Blockchain {
         }
 
         return stringBuilder.toString();
+    }
+
+    public void validateChain(){
+
+        for (Block block: blocks){
+            block.mineBlock(difficulty);
+
+        }
+
     }
 
 }

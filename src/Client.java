@@ -7,11 +7,15 @@ public class Client {
     private static InetAddress address;
     private static DatagramPacket packetSender;
     private static DatagramPacket packetReceiver;
+    private static byte[] sender;
+    private static byte[] receiver;
+    private static String result;
 
     public static void main(String[] args) {
         // write your code here
         try {
             socket = new DatagramSocket();
+            address = InetAddress.getLocalHost();
 
         } catch (SocketException e) {
             e.printStackTrace();
@@ -22,7 +26,8 @@ public class Client {
 
     }
 
-    private String processData(String data){
+    static String processData(String data){
+        main(null);
         byte[] sender = String.valueOf(data).getBytes();
         byte[] receiver = new byte[1024];
         String result = null;
@@ -34,9 +39,9 @@ public class Client {
 
             packetReceiver = new DatagramPacket(receiver, receiver.length);
             socket.receive(packetReceiver);
+            socket.close();
 
             result = new String(packetReceiver.getData());
-            System.out.println(result);
 
 
         } catch (UnknownHostException e) {

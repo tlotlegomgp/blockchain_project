@@ -1,3 +1,4 @@
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -9,14 +10,17 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.util.StringTokenizer;
+
 
 public class BlockchainPane extends StackPane{
+    private static boolean isBlockchainValid = true;
 
     public BlockchainPane(){
         Button connect = new Button("Connect");
         connect.setMinWidth(120);
-        Button disConnect = new Button("Disconnect");
-        disConnect.setMinWidth(120);
+        Button validate = new Button("Validate Blocks");
+        validate.setMinWidth(120);
         Button block1Valid = new Button("Is Block Valid?");
         Button block2Valid = new Button("Is Block Valid?");
         Button block3Valid = new Button("Is Block Valid?");
@@ -28,7 +32,7 @@ public class BlockchainPane extends StackPane{
         TextArea block2Data = new TextArea("");
         TextArea block3Data = new TextArea("");
         TextArea block4Data = new TextArea("");
-        TextArea clientsList = new TextArea("");
+        TextArea clientsList = new TextArea("MGP-22343");
         clientsList.setMaxWidth(150);
         clientsList.setMinHeight(250);
         clientsList.setEditable(false);
@@ -39,31 +43,15 @@ public class BlockchainPane extends StackPane{
         Label clients = new Label("Connected Clients:");
         Label numClients = new Label("");
         Label isChainValid = new Label("");
-        Label timeStamp = new Label("TimeStamp: ");
-        Label hash = new Label("Hash: ");
-        Label prevHash = new Label("Prev Hash: ");
-        Label nonce = new Label("Nonce: ");
-        Label records = new Label("Trades: ");
-        Label timeStamp2 = new Label("TimeStamp: ");
-        Label hash2 = new Label("Hash: ");
-        Label prevHash2 = new Label("Prev Hash: ");
-        Label nonce2 = new Label("Nonce: ");
-        Label records2 = new Label("Trades: ");
-        Label timeStamp3 = new Label("TimeStamp: ");
-        Label hash3 = new Label("Hash: ");
-        Label prevHash3 = new Label("Prev Hash: ");
-        Label nonce3 = new Label("Nonce: ");
-        Label records3 = new Label("Trades: ");
-        Label timeStamp4 = new Label("TimeStamp: ");
-        Label hash4 = new Label("Hash: ");
-        Label prevHash4 = new Label("Prev Hash: ");
-        Label nonce4 = new Label("Nonce: ");
-        Label records4 = new Label("Trades: ");
+        Label block1Info = new Label("");
+        Label block2Info = new Label("");
+        Label block3Info = new Label("");
+        Label block4Info = new Label("");
 
-        records.setPadding(new Insets(15, 10, 0, 10));
-        records2.setPadding(new Insets(15, 10, 0, 10));
-        records3.setPadding(new Insets(15, 10, 0, 10));
-        records4.setPadding(new Insets(15, 10, 0, 10));
+        block1Info.setPadding(new Insets(0, 10, 15, 10));
+        block2Info.setPadding(new Insets(0, 10, 15, 10));
+        block3Info.setPadding(new Insets(0, 10, 15, 10));
+        block4Info.setPadding(new Insets(0, 10, 15, 10));
 
         Label block1Label = new Label("BLOCK 1 ");
         block1Label.setFont(Font.font(null, FontWeight.BOLD, 20));
@@ -81,28 +69,28 @@ public class BlockchainPane extends StackPane{
         //Add nodes to pane
         VBox sideBar = new VBox();
         sideBar.setPadding(new Insets(50, 10, 10, 30));
-        sideBar.getChildren().addAll(connect, connectSpace, disConnect, disconnectSpace, chainValid, validSpace, isChainValid, clients, numClients, clientsList);
+        sideBar.getChildren().addAll(connect, connectSpace, validate, disconnectSpace, chainValid, validSpace, isChainValid, clients, numClients, clientsList);
 
         String css = "-fx-border-color: grey;\n" + "-fx-border-insets: 5;\n" + "-fx-border-width: 1;\n";
         VBox blockBox1 = new VBox();
         blockBox1.setStyle(css);
         blockBox1.setPadding(new Insets(10, 10, 10, 10));
-        blockBox1.getChildren().addAll(block1Label, timeStamp, hash, prevHash, nonce, records, block1Data, block1Valid);
+        blockBox1.getChildren().addAll(block1Label, block1Info, block1Data, block1Valid);
 
         VBox blockBox2 = new VBox();
         blockBox2.setStyle(css);
         blockBox2.setPadding(new Insets(10, 10, 10, 10));
-        blockBox2.getChildren().addAll(block2Label, timeStamp2, hash2, prevHash2, nonce2, records2, block2Data, block2Valid);
+        blockBox2.getChildren().addAll(block2Label, block2Info, block2Data, block2Valid);
 
         VBox blockBox3 = new VBox();
         blockBox3.setStyle(css);
         blockBox3.setPadding(new Insets(10, 10, 10, 10));
-        blockBox3.getChildren().addAll(block3Label, timeStamp3, hash3, prevHash3, nonce3, records3, block3Data, block3Valid);
+        blockBox3.getChildren().addAll(block3Label, block3Info, block3Data, block3Valid);
 
         VBox blockBox4 = new VBox();
         blockBox4.setStyle(css);
         blockBox4.setPadding(new Insets(10, 10, 10, 10));
-        blockBox4.getChildren().addAll(block4Label, timeStamp4, hash4, prevHash4, nonce4, records4, block4Data, block4Valid);
+        blockBox4.getChildren().addAll(block4Label, block4Info, block4Data, block4Valid);
 
 
         VBox leftBlocks = new VBox();
@@ -125,28 +113,83 @@ public class BlockchainPane extends StackPane{
 
         });
 
-        disConnect.setOnAction((ActionEvent e) -> {
+        String blocksDataInfo = Client.processData("B-5");
+        System.out.println(blocksDataInfo);
+        StringTokenizer blocksTokens = new StringTokenizer(blocksDataInfo, "@");
+        System.out.println(blocksTokens.countTokens());
+        block1Info.setText(blocksTokens.nextToken());
+        block1Data.appendText(blocksTokens.nextToken());
+        block2Info.setText(blocksTokens.nextToken());
+        block2Data.appendText(blocksTokens.nextToken());
+        block3Info.setText(blocksTokens.nextToken());
+        block3Data.appendText(blocksTokens.nextToken());
+        block4Info.setText(blocksTokens.nextToken());
+        block4Data.appendText(blocksTokens.nextToken());
 
+        validate.setOnAction((ActionEvent e) -> {
+            String result = Client.processData("B-6");
         });
 
         chainValid.setOnAction((ActionEvent e) -> {
-
+            String result = Client.processData("B-0");
+            if (isBlockchainValid == false)
+                isChainValid.setText("false");
+            else
+                isChainValid.setText(result);
         });
 
         block1Valid.setOnAction((ActionEvent e) -> {
-            blockBox1.setBackground(new Background(new BackgroundFill(Color.rgb(174, 217, 167), CornerRadii.EMPTY, Insets.EMPTY)));
+            String result = Client.processData("B-1");
+            String result2 = Client.processData(block1Data.getText());
+            if (result.trim().equals("true") && result2.trim().equals("true")){
+                isBlockchainValid = true;
+                blockBox1.setBackground(new Background(new BackgroundFill(Color.rgb(174, 217, 167), CornerRadii.EMPTY, Insets.EMPTY)));
+
+            }
+            else{
+                blockBox1.setBackground(new Background(new BackgroundFill(Color.rgb(254, 132, 132), CornerRadii.EMPTY, Insets.EMPTY)));
+                isBlockchainValid = false;
+            }
+
         });
 
         block2Valid.setOnAction((ActionEvent e) -> {
-            blockBox2.setBackground(new Background(new BackgroundFill(Color.rgb(174, 217, 167), CornerRadii.EMPTY, Insets.EMPTY)));
+            String result = Client.processData("B-2");
+            String result2 = Client.processData(block2Data.getText());
+            if (result.trim().equals("true") && result2.trim().equals("true")){
+                blockBox2.setBackground(new Background(new BackgroundFill(Color.rgb(174, 217, 167), CornerRadii.EMPTY, Insets.EMPTY)));
+                isBlockchainValid =  true;
+            }
+            else{
+                blockBox2.setBackground(new Background(new BackgroundFill(Color.rgb(254, 132, 132), CornerRadii.EMPTY, Insets.EMPTY)));
+                isBlockchainValid = false;
+            }
         });
 
         block3Valid.setOnAction((ActionEvent e) -> {
-            blockBox3.setBackground(new Background(new BackgroundFill(Color.rgb(254, 132, 132), CornerRadii.EMPTY, Insets.EMPTY)));
+            String result = Client.processData("B-3");
+            String result2 = Client.processData(block3Data.getText());
+            if (result.trim().equals("true") && result2.trim().equals("true")){
+                isBlockchainValid = true;
+                blockBox3.setBackground(new Background(new BackgroundFill(Color.rgb(174, 217, 167), CornerRadii.EMPTY, Insets.EMPTY)));
+            }
+            else{
+                blockBox3.setBackground(new Background(new BackgroundFill(Color.rgb(254, 132, 132), CornerRadii.EMPTY, Insets.EMPTY)));
+                isBlockchainValid = false;
+            }
         });
 
         block4Valid.setOnAction((ActionEvent e) -> {
-            blockBox4.setBackground(new Background(new BackgroundFill(Color.rgb(254, 132, 132), CornerRadii.EMPTY, Insets.EMPTY)));
+            String result = Client.processData("B-4");
+            String result2 = Client.processData(block4Data.getText());
+            if (result.trim().equals("true") && result2.trim().equals("true")){
+                isBlockchainValid = true;
+                blockBox4.setBackground(new Background(new BackgroundFill(Color.rgb(174, 217, 167), CornerRadii.EMPTY, Insets.EMPTY)));
+            }
+            else{
+                blockBox4.setBackground(new Background(new BackgroundFill(Color.rgb(254, 132, 132), CornerRadii.EMPTY, Insets.EMPTY)));
+                isBlockchainValid = false;
+            }
         });
 
         //Set the root node of the Scene
