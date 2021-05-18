@@ -48,25 +48,32 @@ public class Server {
 
                 System.out.println("Data - " + data.trim());
 
+                // B-0 - Is the blockchain valid
                 if (data.trim().equals("B-0")){
                     result = String.valueOf(blockchain.isBlockChainValid());
                 }
+                // B-1 - Is the genesis block valid
                 else if (data.trim().equals("B-1")){
                     result = String.valueOf(blockchain.isGenesisBlockValid());
                 }
+                // B-2 - Is the second block valid
                 else if (data.trim().equals("B-2")){
                     result = String.valueOf(blockchain.isNewBlockValid(block1, blockchain.previousBlock(block1)));
                 }
+                // B-3 - Is the third block valid
                 else if (data.trim().equals("B-3")){
                     result = String.valueOf(blockchain.isNewBlockValid(block2, block1));
                 }
+                // B-3 - Is the fourth block valid
                 else if (data.trim().equals("B-4")){
                     result = String.valueOf(blockchain.isNewBlockValid(block3, block2));
                 }
+                // B-5 - Get the blockchain blocks
                 else if (data.trim().equals("B-5")){
                     result = block0 + "@" + block0.getRecords() + "@" + block1 + "@" + block1.getRecords() + "@" +
                             block2 + "@" + block2.getRecords() + "@" + block3 + "@" + block3.getRecords();
                 }
+                // B-6 - Validate the blockchain
                 else if (data.trim().equals("B-6")){
                     blockchain.validateChain();
                     result = "Validated!";

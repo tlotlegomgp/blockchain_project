@@ -55,16 +55,16 @@ public class BlockchainPane extends StackPane{
 
         Label block1Label = new Label("BLOCK 1 ");
         block1Label.setFont(Font.font(null, FontWeight.BOLD, 20));
-        block1Label.setPadding(new Insets(30, 0, 20, 0));
+        block1Label.setPadding(new Insets(10, 0, 10, 0));
         Label block2Label = new Label("BLOCK 2 ");
         block2Label.setFont(Font.font(null, FontWeight.BOLD, 20));
-        block2Label.setPadding(new Insets(30, 0, 20, 0));
+        block2Label.setPadding(new Insets(10, 0, 10, 0));
         Label block3Label = new Label("BLOCK 3 ");
         block3Label.setFont(Font.font(null, FontWeight.BOLD, 20));
-        block3Label.setPadding(new Insets(30, 0, 20, 0));
+        block3Label.setPadding(new Insets(10, 0, 10, 0));
         Label block4Label = new Label("BLOCK 4");
         block4Label.setFont(Font.font(null, FontWeight.BOLD, 20));
-        block4Label.setPadding(new Insets(30, 0, 20, 0));
+        block4Label.setPadding(new Insets(10, 0, 10, 0));
 
         //Add nodes to pane
         VBox sideBar = new VBox();

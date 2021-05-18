@@ -15,7 +15,7 @@ public class Main extends Application{
         //Present scene to stage
         primaryStage.setTitle("MGP-Blockchain");
         BlockchainPane layout = new BlockchainPane();
-        Scene scene = new Scene(layout, 1550, 900);
+        Scene scene = new Scene(layout, 1300, 850);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
